@@ -1,0 +1,156 @@
+{
+    "Model": "mistralai/Mistral-7B-Instruct-v0.1",
+    "name": "Fruit_Color",
+    "prompt_templates": [
+        "On the outside, {} are",
+        "What color are {} on the outside? They are the color of",
+        "Given {}, the color of this food is"
+    ],
+    "prompt_templates_full": [
+        "The {} of {} is",
+        "{}'s {} is the",
+        "What is the {} of {}? It is called",
+        "{}'s {} is called",
+        "The name of {}'s {} is",
+        "Given {}, the {} is"
+    ],
+    "order": [
+        1,
+        0,
+        1,
+        0,
+        0,
+        0
+    ],
+    "properties": {
+        "relation_type": "commonsense",
+        "domain_name": "fruit",
+        "range_name": "color",
+        "symmetric": false
+    },
+    "Subject": "Fruit",
+    "Relation": "outside color",
+    "Prompt": "Given {}, the outside color of this fruit is",
+    "samples": [
+        {
+            "subject": "bananas",
+            "object": "yellow"
+        },
+        {
+            "subject": "apples",
+            "object": "red"
+        },
+        {
+            "subject": "watermelons",
+            "object": "green"
+        },
+        {
+            "subject": "kiwis",
+            "object": "brown"
+        },
+        {
+            "subject": "dragon fruits",
+            "object": "pink"
+        },
+        {
+            "subject": "eggplants",
+            "object": "purple"
+        },
+        {
+            "subject": "zucchinis",
+            "object": "green"
+        },
+        {
+            "subject": "pineapples",
+            "object": "brown"
+        },
+        {
+            "subject": "mangoes",
+            "object": "green"
+        },
+        {
+            "subject": "cucumbers",
+            "object": "green"
+        },
+        {
+            "subject": "radishes",
+            "object": "pink"
+        },
+        {
+            "subject": "passion fruits",
+            "object": "purple"
+        },
+        {
+            "subject": "nectarines",
+            "object": "red"
+        },
+        {
+            "subject": "plums",
+            "object": "purple"
+        },
+        {
+            "subject": "potatos",
+            "object": "brown"
+        },
+        {
+            "subject": "grapefruits",
+            "object": "orange"
+        },
+        {
+            "subject": "limes",
+            "object": "green"
+        },
+        {
+            "subject": "oranges",
+            "object": "orange"
+        },
+        {
+            "subject": "peaches",
+            "object": "pink"
+        },
+        {
+            "subject": "pomegranates",
+            "object": "red"
+        },
+        {
+            "subject": "cherries",
+            "object": "red"
+        },
+        {
+            "subject": "strawberries",
+            "object": "red"
+        },
+        {
+            "subject": "lemons",
+            "object": "yellow"
+        },
+        {
+            "subject": "avocados",
+            "object": "green"
+        },
+        {
+            "subject": "coconuts",
+            "object": "brown"
+        },
+        {
+            "subject": "blueberries",
+            "object": "blue"
+        },
+        {
+            "subject": "apricots",
+            "object": "orange"
+        },
+        {
+            "subject": "blackberries",
+            "object": "black"
+        },
+        {
+            "subject": "raspberries",
+            "object": "red"
+        },
+        {
+            "subject": "figs",
+            "object": "purple"
+        }
+    ]
+}

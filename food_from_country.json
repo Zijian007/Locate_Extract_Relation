@@ -1,0 +1,158 @@
+{
+   "Model": "mistralai/Mistral-7B-Instruct-v0.1",
+   "name": "Food_Country",
+   "prompt_templates": [
+       "{} originates from",
+       "{} is from the country of",
+       "What is the country of origin for {}? It originates from",
+       "{} originates from the country of",
+       "Given {}, the origin country of this food is"
+   ],
+   "prompt_templates_full": [
+       "The {} of {} is",
+       "{}'s {} is the",
+       "What is the {} of {}? It is called",
+       "{}'s {} is called",
+       "The name of {}'s {} is",
+       "Given {}, the {} is"
+   ],
+   "order": [
+       1,
+       0,
+       1,
+       0,
+       0,
+       0
+   ],
+   "properties": {
+       "relation_type": "factual",
+       "domain_name": "food",
+       "range_name": "country",
+       "symmetric": false
+   },
+   "Subject": "food",
+   "Relation": "origin country of this food",
+    "Prompt": "Given {}, the origin country of this food is", 
+    "samples":[
+       {
+          "subject":"Pizza",
+          "object":"Italy"
+       },
+       {
+          "subject":"Sushi",
+          "object":"Japan"
+       },
+       {
+          "subject":"Tacos",
+          "object":"Mexico"
+       },
+       {
+          "subject":"Baguette",
+          "object":"France"
+       },
+       {
+          "subject":"Poutine",
+          "object":"Canada"
+       },
+       {
+          "subject":"Paella",
+          "object":"Spain"
+       },
+       {
+          "subject":"Chimichurri",
+          "object":"Argentina"
+       },
+       {
+          "subject":"Baklava",
+          "object":"Turkey"
+       },
+       {
+          "subject":"Feijoada",
+          "object":"Brazil"
+       },
+       {
+          "subject":"Borscht",
+          "object":"Ukraine"
+       },
+       {
+          "subject":"Fish and Chips",
+          "object":"United Kingdom"
+       },
+       {
+          "subject":"Dim Sum",
+          "object":"China"
+       },
+       {
+          "subject":"Kimchi",
+          "object":"South Korea"
+       },
+       {
+          "subject":"Goulash",
+          "object":"Hungary"
+       },
+       {
+          "subject":"Pierogi",
+          "object":"Poland"
+       },
+       {
+          "subject":"Pho",
+          "object":"Vietnam"
+       },
+       {
+          "subject":"Hummus",
+          "object":"Lebanon"
+       },
+       {
+          "subject":"Gyro",
+          "object":"Greece"
+       },
+       {
+          "subject":"Masala Dosa",
+          "object":"India"
+       },
+       {
+          "subject":"Rendang",
+          "object":"Indonesia"
+       },
+       {
+          "subject":"Moussaka",
+          "object":"Greece"
+       },
+       {
+          "subject":"Pavlova",
+          "object":"New Zealand"
+       },
+       {
+          "subject":"Shawarma",
+          "object":"Middle East"
+       },
+       {
+          "subject":"Falafel",
+          "object":"Middle East"
+       },
+       {
+          "subject":"Ceviche",
+          "object":"Peru"
+       },
+       {
+          "subject":"Biryani",
+          "object":"India"
+       },
+       {
+          "subject":"Wiener Schnitzel",
+          "object":"Austria"
+       },
+       {
+          "subject":"Fondue",
+          "object":"Switzerland"
+       },
+       {
+          "subject":"Pad Thai",
+          "object":"Thailand"
+       },
+       {
+          "subject":"Miso Soup",
+          "object":"Japan"
+       }
+    ]
+}

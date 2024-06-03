@@ -1,0 +1,159 @@
+{
+   "Model": "mistralai/Mistral-7B-Instruct-v0.1",
+   "name": "Country_Currency",
+   "prompt_templates": [
+       "The official currency of {} is the",
+       "{}'s official currency is the",
+       "What is the official currency of {}? It is called the",
+       "{}'s official currency is called the",
+       "The name of {}'s official currency is the",
+       "Given {}, the official currency of this country is the"
+   ],
+   "prompt_templates_full": [
+       "The {} of {} is",
+       "{}'s {} is the",
+       "What is the {} of {}? It is called",
+       "{}'s {} is called",
+       "The name of {}'s {} is",
+       "Given {}, the {} is"
+   ],
+   "order": [
+       1,
+       0,
+       1,
+       0,
+       0,
+       0
+   ],
+   "properties": {
+       "relation_type": "factual",
+       "domain_name": "country",
+       "range_name": "currency",
+       "symmetric": false
+   },
+   "Subject": "Company",
+   "Relation": "official currency",
+   "Prompt": "Given {}, the official currency of this country is the",
+   "samples":[
+       {
+          "subject":"United States",
+          "object":"Dollar"
+       },
+       {
+          "subject":"United Kingdom",
+          "object":"Pound"
+       },
+       {
+          "subject":"Japan",
+          "object":"Yen"
+       },
+       {
+          "subject":"Canada",
+          "object":"Dollar"
+       },
+       {
+          "subject":"Australia",
+          "object":"Dollar"
+       },
+       {
+          "subject":"Brazil",
+          "object":"Real"
+       },
+       {
+          "subject":"China",
+          "object":"Yuan"
+       },
+       {
+          "subject":"India",
+          "object":"Rupee"
+       },
+       {
+          "subject":"Russia",
+          "object":"Ruble"
+       },
+       {
+          "subject":"South Africa",
+          "object":"Rand"
+       },
+       {
+          "subject":"Mexico",
+          "object":"Peso"
+       },
+       {
+          "subject":"New Zealand",
+          "object":"Dollar"
+       },
+       {
+          "subject":"South Korea",
+          "object":"Won"
+       },
+       {
+          "subject":"Switzerland",
+          "object":"Franc"
+       },
+       {
+          "subject":"Turkey",
+          "object":"Lira"
+       },
+       {
+          "subject":"Argentina",
+          "object":"Peso"
+       },
+       {
+          "subject":"Norway",
+          "object":"Krone"
+       },
+       {
+          "subject":"Sweden",
+          "object":"Krona"
+       },
+       {
+          "subject":"Denmark",
+          "object":"Krone"
+       },
+       {
+          "subject":"Poland",
+          "object":"Zloty"
+       },
+       {
+          "subject":"Hungary",
+          "object":"Forint"
+       },
+       {
+          "subject":"Czech Republic",
+          "object":"Koruna"
+       },
+       {
+          "subject":"Israel",
+          "object":"Shekel"
+       },
+       {
+          "subject":"Saudi Arabia",
+          "object":"Riyal"
+       },
+       {
+          "subject":"United Arab Emirates",
+          "object":"Dirham"
+       },
+       {
+          "subject":"Singapore",
+          "object":"Dollar"
+       },
+       {
+          "subject":"Malaysia",
+          "object":"Ringgit"
+       },
+       {
+          "subject":"Indonesia",
+          "object":"Rupiah"
+       },
+       {
+          "subject":"Thailand",
+          "object":"Baht"
+       },
+       {
+          "subject":"Philippines",
+          "object":"Peso"
+       }
+    ]
+}
