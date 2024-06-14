@@ -2,7 +2,7 @@ from ast import List
 from matplotlib.pylab import f
 from regex import F
 from transformers import AutoModelForCausalLM, AutoTokenizer
-import nethook
+import baukit.nethook as nethook
 import re
 import torch
 import transformers
