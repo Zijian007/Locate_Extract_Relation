@@ -31,7 +31,7 @@ class ModelAndTokenizer:
             tokenizer = AutoTokenizer.from_pretrained(model_name)
         if model is None:
             assert model_name is not None
-            model = AutoModelForCausalLM.from_pretrained(model_name, device_map = self.device)
+            model = AutoModelForCausalLM.from_pretrained(model_name, device_map = self.device, torch_dtype=torch_dtype)
             nethook.set_requires_grad(False, model)
             model.eval()
             model = model.to(self.device)
