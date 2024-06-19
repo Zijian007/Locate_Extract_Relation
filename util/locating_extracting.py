@@ -224,7 +224,7 @@ Relations = ["the size of", "the weight of", "the height of", "the length of", "
 def edit(mt, data, Ref_text, new_relation, layer_range = (0, 18), coff_task = 1):
     _,layer_names_controlable = get_control_layers(mt.model.config, kind="hs", start=0, end=32)
     task_vectors = extract_task_vectors_from_last(mt.model, mt.tokenizer, Ref_text, range(layer_range[0], layer_range[1]),  rep_token = -1)
-    layer_rang_id_for_control_task, layer_range_names_for_control_task = get_control_layers(mt.model, mt.model.config, kind="hs", start = layer_range[0], end = layer_range[1]) 
+    _, layer_range_names_for_control_task = get_control_layers(mt.model.config, kind = "hs", start = layer_range[0], end = layer_range[1]) 
     len_data = len(data)
     acc, acc_modify, acc_num, acc_num_modify = 0, 0, 0, 0
     for i in range(len_data):
