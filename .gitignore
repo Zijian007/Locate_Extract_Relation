@@ -1,7 +1,5 @@
-*.json
+
 __pycache__
 test.py
 222.py
 .env
-country_capital_city.json
-Results/*
