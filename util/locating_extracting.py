@@ -5,7 +5,9 @@ import matplotlib.pyplot as plt
 import torch
 import baukit
 import torch.nn as nn
-
+import unicodedata
+import re
+import json 
 
 def get_reading_layers(config, start=0, end=32):
     num_layers = config.num_hidden_layers
@@ -14,7 +16,6 @@ def get_reading_layers(config, start=0, end=32):
     layer_end = end
     layer_range_reading = range(layer_start, layer_end)
     return layer_range_reading
-
 
 def extract_task_vectors_from_last(model, tokenizer, input_text, layers,  rep_token = -1):
     hidden_states_layers = {}
@@ -29,7 +30,7 @@ def extract_task_vectors_from_last(model, tokenizer, input_text, layers,  rep_to
         hidden_states_layers[layer] = hidden_states.detach()
     return hidden_states_layers
 
-def get_control_layers(model, config, kind ="att", start=0, end=32):
+def get_control_layers(config, kind ="hs", start=0, end=32):
     num_layers = config.num_hidden_layers
     assert start < end and end <= num_layers, print("Invalid layer range, total layers: ", num_layers)
     layer_names = []
@@ -46,7 +47,7 @@ def get_control_layers(model, config, kind ="att", start=0, end=32):
     return layer_range_control, layer_names
 
  
-def create_replace_function(task_vectors,  coff_task, layers_names_controlable, layer_range_names_for_control_task):
+def create_replace_function(task_vectors, coff_task, layers_names_controlable, layer_range_names_for_control_task):
     input_token_len = None 
     def replace(module,input,output,_count=[0]):
         nonlocal input_token_len  
@@ -66,7 +67,6 @@ def create_replace_function(task_vectors,  coff_task, layers_names_controlable, 
             return output
     return replace
 
-
 def plot_scores(score_no_instruct, score_no_input, title):
     x1 = torch.arange(len(score_no_instruct))
     x2 = torch.arange(len(score_no_input))
@@ -81,32 +81,6 @@ def plot_scores(score_no_instruct, score_no_input, title):
     plt.legend()
     plt.show()
     
-def plot_dict(data_dict1,title, xlabel, ylabel):
-    keys = list(data_dict1.keys())
-    values1 = list(data_dict1.values())
-    x = torch.arange(len(keys))
-    
-    plt.figure(figsize=(10, 4))
-    plt.plot(x, values1, color='red', linewidth=1.0, linestyle='-')
-    # plt.plot(x, values2, color='blue', linewidth=1.0, linestyle='--')
-    # 计算方差
-    for i, value1 in enumerate(values1):
-        if value1 == 0:
-            plt.scatter(x[i], value1, color='red', marker='o', s=50)
-    mean_values = np.array(values1)
-    std_values = np.random.uniform(5, 15, size=len(values1))  # 生成示例方差数据，实际应根据你的需求计算方差
-    # plt.fill_between(x, mean_values - std_values, mean_values + std_values, color='red', alpha=0.1, edgecolor='none')  # 设置 edgecolor 参数为 'none'
-    plt.gca().spines['right'].set_visible(False)
-    plt.gca().spines['top'].set_visible(False)
-    plt.xticks(x, keys)
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    plt.show()
-
-
-
-
 class SubObjDataset(Dataset):
     def __init__(self, data):
         self.data = data
@@ -120,8 +94,6 @@ class SubObjDataset(Dataset):
         object = item["object"]
         return {"subject": subject, "object": object}
     
-import unicodedata
-import re
 def is_string_contains(str1, str2):
     str1_normalized = unicodedata.normalize('NFC', str1).encode('ASCII', 'ignore').decode('utf-8')
     str2_normalized = unicodedata.normalize('NFC', str2).encode('ASCII', 'ignore').decode('utf-8')
@@ -133,7 +105,6 @@ def is_string_contains(str1, str2):
     str2_lower = str2_normalized.lower()
 
     return str1_lower in str2_lower or str2_lower in str1_lower
-import json 
 
 def create_dataloader(json_path,batch_size=1):
     parsed_data = json.load(open(json_path, 'r'))
@@ -148,8 +119,6 @@ def create_dataloader(json_path,batch_size=1):
         print(f"subject:{subject},object:{object}")
         break
     return dataloader, len_data
-
-
 
 def make_inputs(tokenizer, prompts, device):
     token_lists = [tokenizer.encode(p, add_special_tokens=True) for p in prompts]
@@ -166,7 +135,6 @@ def make_inputs(tokenizer, prompts, device):
         #    position_ids=torch.tensor(position_ids).to(device),
         attention_mask=torch.tensor(attention_mask).to(device),
     )
-
 
 def generate_manually_with_probs(model, tokenizer, inp, max_length):
     #手动生成文本
@@ -195,11 +163,10 @@ def generate_manually_with_probs(model, tokenizer, inp, max_length):
     # print(f"ids:{ids}")
     return generated_text , new_text, probs
 
-
-def zero_shot(mt, json_path,  Ref_text, layer_range = (0, 18), coff_task = 1, use_comma = True):
-    _,layer_names_controlable = get_control_layers(mt.model, mt.model.config, kind="hs", start=0, end=32)
+def zero_shot(mt, json_path,  Ref_text, layer_range = (0, 18), coff = 1, template = ""):
+    _,layer_names_controlable = get_control_layers(mt.model.config, kind="hs", start=0, end=32)
     task_vectors = extract_task_vectors_from_last(mt.model, mt.tokenizer, Ref_text, range(layer_range[0], layer_range[1]),  rep_token = -1)
-    layer_rang_id_for_control_task, layer_range_names_for_control_task = get_control_layers(mt.model, mt.model.config, kind="hs", start = layer_range[0], end = layer_range[1]) 
+    layer_rang_id_for_control_task, layer_range_names_for_control_task = get_control_layers(mt.model.config, kind="hs", start = layer_range[0], end = layer_range[1]) 
     parsed_data = json.load(open(json_path, 'r'))
     Template= parsed_data["Prompt"]
     dataloader, len_data = create_dataloader(json_path, batch_size=1)
@@ -207,14 +174,14 @@ def zero_shot(mt, json_path,  Ref_text, layer_range = (0, 18), coff_task = 1, us
     for i,batch in enumerate(dataloader):
         Bad_case, Good_case = [], []
         Sub, Obj = batch["subject"][0], batch["object"][0]
-        Input = "Given " + Sub + ("," if use_comma else "")
+        Input = template.format(Sub)
         print(f"Input:{Input}")
         Input_token_id = make_inputs(mt.tokenizer, [Input], mt.device)
         Template_inp = make_inputs(mt.tokenizer, [Template.format(Sub)], device = mt.device)
         edited_out, new_out_full ,_ = generate_manually_with_probs(mt.model, mt.tokenizer, Template_inp , max_length = 5)
         with baukit.TraceDict(
             mt.model, layers = layer_names_controlable, 
-            edit_output = create_replace_function(task_vectors = task_vectors, coff_task = coff_task, layers_names_controlable = layer_names_controlable,                                                                             
+            edit_output = create_replace_function(task_vectors = task_vectors, coff_task = coff, layers_names_controlable = layer_names_controlable,                                                                             
                                                     layer_range_names_for_control_task = layer_range_names_for_control_task), 
                                                     retain_input = True, retain_output=True
         ) as ret:
@@ -255,7 +222,7 @@ Relations = ["the size of", "the weight of", "the height of", "the length of", "
 "the application of", "the utilization of", "the adaptation of", "the transformation of"]
 
 def edit(mt, data, Ref_text, new_relation, layer_range = (0, 18), coff_task = 1):
-    _,layer_names_controlable = get_control_layers(mt.model, mt.model.config, kind="hs", start=0, end=32)
+    _,layer_names_controlable = get_control_layers(mt.model.config, kind="hs", start=0, end=32)
     task_vectors = extract_task_vectors_from_last(mt.model, mt.tokenizer, Ref_text, range(layer_range[0], layer_range[1]),  rep_token = -1)
     layer_rang_id_for_control_task, layer_range_names_for_control_task = get_control_layers(mt.model, mt.model.config, kind="hs", start = layer_range[0], end = layer_range[1]) 
     len_data = len(data)

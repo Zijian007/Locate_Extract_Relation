@@ -1,16 +1,11 @@
 import os
-import re
 from collections import defaultdict
 import sys
 import baukit
-from sympy import N
 
 sys.path.append('..')
 import torch
-from datasets import load_dataset
 from matplotlib import pyplot as plt
-from tqdm import tqdm
-from transformers import AutoModelForCausalLM, AutoTokenizer
 import numpy as np
 
 
@@ -314,8 +309,8 @@ def plot_trace_heatmap(result, savepdf=None, title=None, xlabel=None, modelname=
         labels[i] = labels[i] + "*"
 
     with plt.rc_context(rc={"font.family": "DejaVu Sans"}):
-        # fig, ax = plt.subplots(figsize=(3.5, 2), dpi=200)
-        fig, ax = plt.subplots(figsize=(4, 3), dpi=200)
+        fig, ax = plt.subplots(figsize=(3.5, 2), dpi=200)
+        # fig, ax = plt.subplots(figsize=(4, 3), dpi=200)
         h = ax.pcolor(
             differences,
             cmap={"hs": "Oranges", "None": "Purples", "mlp": "Greens", "attn": "Reds", "att_v": "Blues", "att_q": "gray"}[

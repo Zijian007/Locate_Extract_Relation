@@ -4,10 +4,7 @@
     "The capital city of {} is",
     "The capital of {} is"
   ],
-  "prompt_templates_zs": [
-    "The capital of {} is the city of",
-    "What is the capital of {}? It is the city of"
-  ],
+  "prompt_templates_zs": "Given {},",
   "properties": {
     "relation_type": "factual",
     "domain_name": "country",
